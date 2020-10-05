@@ -8,6 +8,16 @@ const schema = new mongoose.Schema({
       type: String
     },
 
+    width: {
+      required: true,
+      type: Number
+    },
+
+    height: {
+      required: true,
+      type: Number
+    },
+
     routes: {
       required: true,
       type: Array

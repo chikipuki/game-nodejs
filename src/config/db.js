@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const config = require('./config');
 
-console.log({ connect: config.mongodb.uri })
 
-mongoose.connect(config.mongodb.uri);
+const DB_URL = 'mongodb://localhost:27017/game'
+console.log({ DB_URL })
+
+mongoose.connect(DB_URL);
 
 mongoose.connection.on('error', (err) => {
     console.log("Error: ", err);

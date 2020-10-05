@@ -4,11 +4,11 @@ var Repository = require('../repositories/player');
 require('../config/db')
 
 router.get('/', function(req, res, next) {
-  console.log({Repository})
   Repository.all((data) => res.json(data))
 });
 
 router.post('/player', function(req, res, next) {
+  Repository.create(req.body, (data) => res.json(data))
   res.send('create a player with initial (0, 0) position');
 })
 

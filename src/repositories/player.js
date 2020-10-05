@@ -3,7 +3,6 @@ const Player = require('../models/player');
 module.exports = {
 
     all: (cb) => {
-        console.log('repository all')
         Player.find({}, (err, players) => {
 
             console.log({ players })
@@ -46,9 +45,14 @@ module.exports = {
         });
     },
     create: (data, cb) => {
-        let player = {name: data.name, email: data.email};
+        let player = {
+          id: data.id, 
+          width: data.size.x, 
+          height: data.size.y,
+          routes: [{ x: 0, y: 0}]
+        };
 
-        Player.create(player, (err, player) => {
+        Player.create(player, (err, newPlayer) => {
 
             let data = {};
 
@@ -60,7 +64,7 @@ module.exports = {
             }
             
             data = {
-                'data': {player}
+                'data': {player: newPlayer}
             };
 
             return cb(data);

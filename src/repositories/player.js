@@ -1,123 +1,125 @@
-const Player = require('../models/player');
+const Player = require('../schema/player');
 
 module.exports = {
 
-    all: (cb) => {
-        Player.find({}, (err, players) => {
+  findById: (id) => {
+    return new Promise(function(resolve, reject) {
+      Player.findById(id, (err, player) => {
+        let data = {};
 
-            console.log({ players })
-
-            let data = {};
-
-            if (err) {
-                data = {
-                    error: true,
-                    error_message: err
-                };
-            }
+        if (err) {
             data = {
-                'data': {players}
+                error: true,
+                error_message: err
             };
-
-            return cb(data);
-
-        });
-
-    },
-    get: (id, cb) => {
-
-        Player.findById(id, (err, player) => {
-
-            let data = {};
-
-            if (err) {
-                data = {
-                    error: true,
-                    error_message: err
-                };
-            }
-            data = {
-                'data': {player}
-            };
-
-            return cb(data);
-
-        });
-    },
-    create: (data, cb) => {
-        let player = {
-          id: data.id, 
-          width: data.size.x, 
-          height: data.size.y,
-          routes: [{ x: 0, y: 0}]
+            reject(data);
+            return;
+        }
+        data = {
+            'data': {player}
         };
+        resolve(data);
+      })
+    })
+  },
 
-        Player.create(player, (err, newPlayer) => {
+  all: (cb) => {
+    return new Promise(function(resolve, reject) {
+      Player.find({}, (err, players) => {
 
-            let data = {};
+        console.log({ players })
 
-            if (err) {
-                data = {
-                    error: true,
-                    error_message: err
-                };
-            }
-            
+        let data = {};
+
+        if (err) {
             data = {
-                'data': {player: newPlayer}
+                error: true,
+                error_message: err
             };
+            reject(data);
+            return;
+        }
+        data = {
+            'data': {players}
+        };
+        resolve(data);
+      });
+    })
+  },
+  create: (data, cb) => {
+      let player = {
+        id: data.id, 
+        width: data.size.x, 
+        height: data.size.y,
+        routes: [{ x: 0, y: 0}]
+      };
 
-            return cb(data);
-        });
-    },
-    update: (id, data, cb) => {
-        Player.update({'_id': id}, {$set: data}, (err) => {
+      Player.create(player, (err, newPlayer) => {
 
-            let data = {};
+          let data = {};
 
-            if (err) {
-                data = {
-                    error: true,
-                    error_message: err
-                };
-            }
+          if (err) {
+              data = {
+                  error: true,
+                  error_message: err
+              };
+          }
+          
+          data = {
+              'data': {player: newPlayer}
+          };
 
-            Player.findById(id, (err, player) => {
-                if (err) {
-                    data = {
-                        error: true,
-                        error_message: err
-                    };
-                }
+          return cb(data);
+      });
+  },
+  update: (id, data, cb) => {
+      Player.update({'_id': id}, {$set: data}, (err) => {
 
-                data = {
-                    'data': {player}
-                };
+          let data = {};
 
-                return cb(data);
-            });
+          if (err) {
+              data = {
+                  error: true,
+                  error_message: err
+              };
+          }
 
-            return true;
+          Player.findById(id, (err, player) => {
+              if (err) {
+                  data = {
+                      error: true,
+                      error_message: err
+                  };
+              }
 
-        });
-    },
-    remove: (id, cb) => {
-        Player.findByIdAndRemove(id, (err) => {
+              data = {
+                  'data': {player}
+              };
 
-            if (err) {
-                data = {
-                    error: true,
-                    error_message: err
-                };
-            }
+              return cb(data);
+          });
 
-            data = {
-                status: true
-            };
+          return true;
 
-            return cb(data);
+      });
+  },
+  remove: (id, cb) => {
+      Player.findByIdAndRemove(id, (err) => {
 
-        });
-    }
+          if (err) {
+              data = {
+                  error: true,
+                  error_message: err
+              };
+          }
+
+          data = {
+              status: true
+          };
+
+          return cb(data);
+
+      });
+  }
 
 };

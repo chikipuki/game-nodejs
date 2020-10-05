@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Repository = require('../repositories/player');
-require('../config/db')
 
 router.get('/', function(req, res, next) {
   Repository.all((data) => res.json(data))

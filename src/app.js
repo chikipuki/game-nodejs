@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-const normalizePort = require('normalize-port');
+require('./config/db')
 
 var playerRoutes = require('./routes/player');
 

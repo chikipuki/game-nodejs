@@ -4,20 +4,20 @@ const config = require('./config');
 mongoose.connect(config.mongodb.uri);
 
 mongoose.connection.on('error', (err) => {
-    console.log("Erro: ", err);
+    console.log("Error: ", err);
 });
 
 mongoose.connection.on('connected', () => {
-    console.log("Conectado ao MongoDB");
+    console.log("Connected to MongoDB");
 });
 
 mongoose.connection.on('disconnected', () => {
-    console.log("Conectado ao MongoDB");
+    console.log("Disconnected from MongoDB");
 });
 
 process.on('SIGINT', () => {
     mongoose.connection.close(() => {
-        console.log('Conexão Encerrada');
+        console.log('Connection closed. exiting');
         process.exit(0);
     });
 });

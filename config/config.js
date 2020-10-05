@@ -2,10 +2,10 @@ module.exports = {
 
     server: {
         url: '',
-        port: '3000'
+        port: '4200'
     },
     mongodb: {
-        uri: 'mongodb://mongodb/test',
+        uri: 'mongodb://localhost:27017/game',
         config: {}
     }
 

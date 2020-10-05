@@ -1,8 +1,13 @@
 var express = require('express');
 var router = express.Router();
-router.get('/', function(req, res, next) {
-  res.send({ lol: 'index' });
-});
+
+router.post('/player', function(req, res, next) {
+  res.send('create a player with initial (0, 0) position');
+})
+
+router.get('/:id/position', function(req, res, next) {
+  res.send('return current position')
+})
 
 router.patch('/:id/move', function(req, res, next) {
   res.send(`player ${req.params.id} move ${req.query.direction}`)

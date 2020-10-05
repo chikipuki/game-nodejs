@@ -15,5 +15,8 @@ services:
   mongodb:
     image: mongo
     container_name: api-mongodb
+    environment: 
+      MONGO_INITDB_DATABASE: game
     ports:
-    - 27017:27017
+      - 27017:27017
+    

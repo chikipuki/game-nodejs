@@ -3,7 +3,10 @@ const Player = require('../models/player');
 module.exports = {
 
     all: (cb) => {
+        console.log('repository all')
         Player.find({}, (err, players) => {
+
+            console.log({ players })
 
             let data = {};
 

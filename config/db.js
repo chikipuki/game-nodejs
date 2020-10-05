@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const config = require('./config');
 
+console.log({ connect: config.mongodb.uri })
+
 mongoose.connect(config.mongodb.uri);
 
 mongoose.connection.on('error', (err) => {

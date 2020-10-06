@@ -49,7 +49,7 @@ router.delete('/:id', async function(req, res, next) {
 });
 
 router.get('/:id/route', async function(req, res, next) {
-  execute(() => GetRoutesUseCase({ repository, exceptionFactory }).getRoutes({ id: req.body.id }), res);
+  execute(() => GetRoutesUseCase({ repository, exceptionFactory }).getRoutes({ id: req.params.id }), res);
 });
 
 module.exports = router;

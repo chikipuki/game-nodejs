@@ -21,6 +21,10 @@ module.exports = {
 
   getSizeParametersNotSpecified() {
     return createError('size parameters not specified', BAD_REQUEST);
+  },
+
+  getPlayerNotFound() {
+    return createError('player not found', BAD_REQUEST);
   }
 
 }

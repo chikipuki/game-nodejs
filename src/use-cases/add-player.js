@@ -24,7 +24,7 @@ module.exports = function ({ repository }) {
       }
 
       const playerData = {
-        playerId: id.toString(),
+        id: id.toString(),
         width: size.x,
         height: size.y,
         routes: [ { x: 0, y: 0 }]

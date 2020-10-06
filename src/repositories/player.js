@@ -6,7 +6,7 @@ module.exports = {
     console.log('findById ', id);
     return new Promise(function(resolve, reject) {
       console.log('promise callback')
-      Player.find({ playerId: id }, (err, player) => {
+      Player.find({ id }, (err, player) => {
         console.log('inside player callback')
         let data = {};
 

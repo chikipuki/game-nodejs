@@ -3,7 +3,7 @@ var path = require('path');
 var logger = require('morgan');
 require('./config/db')
 
-var playerRoutes = require('./routes/player');
+var playerRoutes = require('./routes/gameRoutes');
 
 var app = express();
 

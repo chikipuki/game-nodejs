@@ -1,22 +1,20 @@
-const ExceptionFactory = require('../exceptions/factory')
-
-module.exports = function ({ repository }) {
+module.exports = function ({ repository, exceptionFactory }) {
   return {
     addPlayer: async function({ id, size }) {
       
       if (!id) {
-        throw ExceptionFactory.getPlayerIdNotSpecified();
+        throw exceptionFactory.getPlayerIdNotSpecified();
       }
 
       const playerId = id.toString();
       const exists = await repository.findById(playerId)
     
       if (exists && exists.length > 0) {
-        throw ExceptionFactory.getPlayerAlreadyExists();
+        throw exceptionFactory.getPlayerAlreadyExists();
       }
 
       if (!size || !size.x || !size.y) {
-        throw ExceptionFactory.getSizeParametersNotSpecified();
+        throw exceptionFactory.getSizeParametersNotSpecified();
       }
 
       const playerData = {

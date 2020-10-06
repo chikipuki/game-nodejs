@@ -1,21 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var repository = require('../repositories/player');
+var exceptionFactory = require('../exceptions/factory');
 var AddPlayerUseCase = require('../use-cases/add-player');
 var GetCurrentPositionUseCase = require('../use-cases/get-current-position');
 
 router.get('/', async function(req, res, next) {
-  const result = await GetCurrentPositionUseCase({ repository }).getPosition({ id: 1 });
+  const result = await GetCurrentPositionUseCase({ repository, exceptionFactory }).getPosition({ id: 1 });
   res.json(result);
 });
 
 router.post('/player', async function(req, res, next) {
-  const result = await AddPlayerUseCase({ repository }).addPlayer({ id: 112, size: { x: 4, y: 5 } });
+  const result = await AddPlayerUseCase({ repository, exceptionFactory }).addPlayer({ id: 112, size: { x: 4, y: 5 } });
   res.json(result);
 })
 
 router.get('/:id/position', async function(req, res, next) {
-  const result = await GetCurrentPositionUseCase({ repository }).getPosition({ id: req.params.id });
+  const result = await GetCurrentPositionUseCase({ repository, exceptionFactory }).getPosition({ id: req.params.id });
   res.json(result);
 })
 

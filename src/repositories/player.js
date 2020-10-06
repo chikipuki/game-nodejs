@@ -16,14 +16,14 @@ module.exports = {
             return;
         }
         data = {
-            'data': {player}
+            'data': { player }
         };
         resolve(data);
-      })
-    })
+      });
+    });
   },
 
-  all: (cb) => {
+  all: () => {
     return new Promise(function(resolve, reject) {
       Player.find({}, (err, players) => {
 
@@ -40,86 +40,90 @@ module.exports = {
             return;
         }
         data = {
-            'data': {players}
+            'data': { players }
         };
         resolve(data);
       });
-    })
+    });
   },
-  create: (data, cb) => {
-      let player = {
-        id: data.id, 
-        width: data.size.x, 
-        height: data.size.y,
-        routes: [{ x: 0, y: 0}]
-      };
 
+  create: (player) => {
+    return new Promise(function (resolve, reject) {
       Player.create(player, (err, newPlayer) => {
 
-          let data = {};
+        let data = {};
 
-          if (err) {
-              data = {
-                  error: true,
-                  error_message: err
-              };
-          }
-          
-          data = {
-              'data': {player: newPlayer}
-          };
-
-          return cb(data);
+        if (err) {
+            data = {
+                error: true,
+                error_message: err
+            };
+            reject(err);
+            return;
+        }
+        
+        data = {
+            'data': { player: newPlayer }
+        };
+        resolve(data);
       });
+    });
   },
+
   update: (id, data, cb) => {
+
+    return new Promise(function (resolve, reject) {
       Player.update({'_id': id}, {$set: data}, (err) => {
 
-          let data = {};
+        let data = {};
 
-          if (err) {
-              data = {
-                  error: true,
-                  error_message: err
-              };
-          }
+        if (err) {
+            data = {
+                error: true,
+                error_message: err
+            };
+            reject(data);
+            return;
+    }
 
-          Player.findById(id, (err, player) => {
-              if (err) {
-                  data = {
-                      error: true,
-                      error_message: err
-                  };
-              }
+        Player.findById(id, (err, player) => {
+            if (err) {
+                data = {
+                    error: true,
+                    error_message: err
+                };
+                reject(data);
+                return;
+            }
 
-              data = {
-                  'data': {player}
-              };
+            data = {
+                'data': {player}
+            };
 
-              return cb(data);
-          });
-
-          return true;
-
-      });
+            resolve(data);
+        });
+    });
+  });
   },
+
   remove: (id, cb) => {
+    return new Promise(function(resolve, reject) {
       Player.findByIdAndRemove(id, (err) => {
+        if (err) {
+            data = {
+                error: true,
+                error_message: err
+            };
+            reject(data);
+            return;
+        }
 
-          if (err) {
-              data = {
-                  error: true,
-                  error_message: err
-              };
-          }
-
-          data = {
-              status: true
-          };
-
-          return cb(data);
-
-      });
+        data = {
+            status: true
+        };
+        resolve(data);
+    });
+  });
   }
 
 };

@@ -3,7 +3,6 @@ const Player = require('../schema/playerSchema');
 module.exports = {
 
   findById: (id) => {
-    console.log('findById ', id);
     return new Promise(function(resolve, reject) {
       Player.find({ id }, (err, player) => {
         if (err) {

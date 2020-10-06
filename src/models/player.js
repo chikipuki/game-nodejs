@@ -1,5 +1,3 @@
-const getCurrentPosition = require("../use-cases/get-current-position");
-
 function create({ id, width, height, routes }) {
   return {
     id: id.toString(),
@@ -101,7 +99,6 @@ module.exports = {
   },
 
   createPlayerFromSchema(data) {
-    console.log('createPlayerFromSchema', data)
     return create(data)
   }
 

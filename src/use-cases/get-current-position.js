@@ -1,10 +1,8 @@
 const PlayerModel = require('../models/player');
 
-module.exports = function ({ repository, exceptionFactory }) {
+module.exports = ({ repository, exceptionFactory }) => {
   return {
     getPosition: async function({ id }) {
-
-      console.log({ PlayerModel })
 
       if (!id) {
         throw exceptionFactory.getPlayerIdNotSpecified();

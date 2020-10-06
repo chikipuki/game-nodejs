@@ -4,8 +4,6 @@ module.exports = function ({ repository, exceptionFactory }) {
   return {
     move: async function({ id, direction }) {
 
-      console.log({ PlayerModel })
-      
       if (!id) {
         throw exceptionFactory.getPlayerIdNotSpecified();
       }

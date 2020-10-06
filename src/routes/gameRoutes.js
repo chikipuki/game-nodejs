@@ -14,9 +14,7 @@ var GetRoutesUseCase = require('../use-cases/get-routes');
 var MoveUseCase = require('../use-cases/MoveUseCase');
 
 router.get('/', async function(req, res, next) {
-  const result = await MoveUseCase({ repository, exceptionFactory }).move({ id: 1, direction: 'down' });
-  const r = await GetCurrentPositionUseCase({ repository, exceptionFactory }).getPosition({ id: 1 });
-  res.json({ ...result, ...r });
+  res.send('Welcome');
 });
 
 router.post('/player', async function(req, res, next) {

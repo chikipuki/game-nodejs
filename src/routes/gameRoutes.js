@@ -10,9 +10,10 @@ var AddPlayerUseCase = require('../use-cases/add-player');
 var GetCurrentPositionUseCase = require('../use-cases/get-current-position');
 var ListPlayersUseCase = require('../use-cases/list-players')
 var DeletePlayerUseCase = require('../use-cases/delete-player')
+var GetRoutesUseCase = require('../use-cases/get-routes')
 
 router.get('/', async function(req, res, next) {
-  const result = await DeletePlayerUseCase({ repository, exceptionFactory }).delete({ id: 2 });
+  const result = await GetRoutesUseCase({ repository, exceptionFactory }).getRoutes({ id: 1 });
   res.json(result);
 });
 
@@ -41,7 +42,8 @@ router.delete('/:id', async function(req, res, next) {
 });
 
 router.get('/:id/route', async function(req, res, next) {
-  res.json('return all positions a player has visited in the visit order');
+  const result = await GetRoutesUseCase({ repository, exceptionFactory }).getRoutes({ id: req.body.id });
+  res.json(result);
 });
 
 module.exports = router;

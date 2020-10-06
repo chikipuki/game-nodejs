@@ -30,6 +30,10 @@ function create({ id, width, height, routes }) {
       const finished = position.x === width - 1 && position.y === height - 1;
 
       return { id, finished, position }
+    },
+
+    getRoutes: () => {
+      return { route: routes }
     }
   }
 }

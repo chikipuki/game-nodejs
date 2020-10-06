@@ -45,6 +45,10 @@ function create({ id, width, height, routes }) {
       let x = currentPosition.x;
       let y = currentPosition.y;
 
+      if (x === width - 1 && y === height - 1) {
+        return false;
+      }
+
       switch (direction.toLowerCase()) {
         case 'up': 
           y--; 
@@ -97,6 +101,7 @@ module.exports = {
   },
 
   createPlayerFromSchema(data) {
+    console.log('createPlayerFromSchema', data)
     return create(data)
   }
 

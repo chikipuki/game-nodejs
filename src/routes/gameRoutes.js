@@ -2,7 +2,7 @@ var express = require('express');
 
 var router = express.Router();
 
-var repository = require('../repositories/player');
+var repository = require('../repositories/playerRepository');
 
 var exceptionFactory = require('../exceptions/factory');
 
@@ -15,7 +15,8 @@ var MoveUseCase = require('../use-cases/MoveUseCase');
 
 router.get('/', async function(req, res, next) {
   const result = await MoveUseCase({ repository, exceptionFactory }).move({ id: 1 });
-  res.json(result);
+  const r = await GetCurrentPositionUseCase({ repository, exceptionFactory }).getPosition({ id: 1 });
+  res.json({ ...result, ...r });
 });
 
 router.post('/player', async function(req, res, next) {
@@ -29,8 +30,8 @@ router.get('/:id/position', async function(req, res, next) {
 })
 
 router.patch('/:id/move', async function(req, res, next) {
-  const result = await MoveUse
-  res.json(`player ${req.params.id} move ${req.query.direction}`)
+  const result = await MoveUseCase({ repository, exceptionFactory }).move({ id: req.params.id, direction: req.query.direction });
+  res.json(result);
 })
 
 router.get('/players', async function(req, res, next) {

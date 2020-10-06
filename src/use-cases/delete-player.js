@@ -1,5 +1,3 @@
-const PlayerModel = require('../models/player');
-
 module.exports = function ({ repository, exceptionFactory }) {
   return {
     delete: async function({ id }) {

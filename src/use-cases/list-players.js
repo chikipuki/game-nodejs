@@ -6,8 +6,6 @@ module.exports = function ({ repository }) {
 
       const list = await repository.all();
 
-      console.log({ list })
-
       const players = list.map(item => PlayerModel.createPlayerFromSchema(item).getCurrentState())
 
       return { players };

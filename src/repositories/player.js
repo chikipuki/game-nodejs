@@ -53,7 +53,7 @@ module.exports = {
 
   remove: (id) => {
     return new Promise(function(resolve, reject) {
-      Player.findByIdAndRemove(id, (err) => {
+      Player.remove({ id }, (err) => {
         if (err) {
           reject(err);
         } else {

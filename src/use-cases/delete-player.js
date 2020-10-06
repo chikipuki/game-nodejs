@@ -2,7 +2,7 @@ const PlayerModel = require('../models/player');
 
 module.exports = function ({ repository, exceptionFactory }) {
   return {
-    getPosition: async function({ id }) {
+    delete: async function({ id }) {
       
       if (!id) {
         throw exceptionFactory.getPlayerIdNotSpecified();
@@ -15,9 +15,9 @@ module.exports = function ({ repository, exceptionFactory }) {
         throw exceptionFactory.getPlayerNotFound();
       }
 
-      const player = PlayerModel.createPlayerFromSchema(exists[0]);
+      const result = await repository.remove(playerId);
 
-      return player.getCurrentPosition();
+      return result;
 
     }
   }

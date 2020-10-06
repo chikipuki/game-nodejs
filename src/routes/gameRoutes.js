@@ -9,9 +9,10 @@ var exceptionFactory = require('../exceptions/factory');
 var AddPlayerUseCase = require('../use-cases/add-player');
 var GetCurrentPositionUseCase = require('../use-cases/get-current-position');
 var ListPlayersUseCase = require('../use-cases/list-players')
+var DeletePlayerUseCase = require('../use-cases/delete-player')
 
 router.get('/', async function(req, res, next) {
-  const result = await ListPlayersUseCase({ repository }).getAll();
+  const result = await DeletePlayerUseCase({ repository, exceptionFactory }).delete({ id: 2 });
   res.json(result);
 });
 
@@ -30,11 +31,13 @@ router.patch('/:id/move', async function(req, res, next) {
 })
 
 router.get('/players', async function(req, res, next) {
-  res.json('return list of all players and their positions');
+  const result = await ListPlayersUseCase({ repository }).getAll();
+  res.json(result);
 })
 
 router.delete('/:id', async function(req, res, next) {
-  res.json('delete a player from players list');
+  const result = await DeletePlayerUseCase({ repository, exceptionFactory }).delete({ id: req.params.id });
+  res.json(result);
 });
 
 router.get('/:id/route', async function(req, res, next) {

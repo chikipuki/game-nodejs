@@ -8,12 +8,13 @@ var exceptionFactory = require('../exceptions/factory');
 
 var AddPlayerUseCase = require('../use-cases/add-player');
 var GetCurrentPositionUseCase = require('../use-cases/get-current-position');
-var ListPlayersUseCase = require('../use-cases/list-players')
-var DeletePlayerUseCase = require('../use-cases/delete-player')
-var GetRoutesUseCase = require('../use-cases/get-routes')
+var ListPlayersUseCase = require('../use-cases/list-players');
+var DeletePlayerUseCase = require('../use-cases/delete-player');
+var GetRoutesUseCase = require('../use-cases/get-routes');
+var MoveUseCase = require('../use-cases/MoveUseCase');
 
 router.get('/', async function(req, res, next) {
-  const result = await GetRoutesUseCase({ repository, exceptionFactory }).getRoutes({ id: 1 });
+  const result = await MoveUseCase({ repository, exceptionFactory }).move({ id: 1 });
   res.json(result);
 });
 
@@ -28,6 +29,7 @@ router.get('/:id/position', async function(req, res, next) {
 })
 
 router.patch('/:id/move', async function(req, res, next) {
+  const result = await MoveUse
   res.json(`player ${req.params.id} move ${req.query.direction}`)
 })
 

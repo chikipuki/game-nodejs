@@ -39,16 +39,17 @@ module.exports = {
     });
   },
 
-  update: (id, data) => {
+  update: (data) => {
+    const id = data.id;
     return new Promise(function (resolve, reject) {
-      Player.update({'_id': id}, {$set: data}, (err) => {
+      Player.update({ id }, {$set: data}, (err) => {
         if (err) {
           reject(err);
         } else {
           resolve(true);
         }
+      });
     });
-  });
   },
 
   remove: (id) => {

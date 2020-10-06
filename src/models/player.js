@@ -34,6 +34,43 @@ function create({ id, width, height, routes }) {
 
     getRoutes: () => {
       return { route: routes }
+    },
+
+    move: ({ direction }) => {
+      if (!direction) {
+        return false;
+      }
+
+      const currentPosition = routes[routes.length - 1]
+      let x = currentPosition.x;
+      let y = currentPosition.y;
+
+      switch (direction.toLowerCase()) {
+        case 'up': 
+          y--; 
+          break;
+        case 'down': 
+          y++;
+          break;
+        case 'left': 
+          x--; 
+          break;
+        case 'right': 
+          x++; 
+          break;
+      }
+
+      if (x < 0 || x >= width) {
+        return false;
+      }
+
+      if (y < 0 || y >= height) {
+        return false;
+      }
+
+      routes.push({ x, y });
+
+      return true;
     }
   }
 }

@@ -4,9 +4,10 @@ const SERVER_ERROR = 500;
 
 
 function createError(message, status = SERVER_ERROR) {
-  const result = new Error(message);
-  result.status = status
-  return result;
+  return {
+    message,
+    status
+  };
 }
 
 module.exports = {
@@ -25,6 +26,10 @@ module.exports = {
 
   getSizeParametersNotSpecified() {
     return createError('size parameters not specified', BAD_REQUEST);
+  },
+
+  getSizeParametersMustBeBiggerThanZero() {
+    return createError('size parameters must be bigger than zero', BAD_REQUEST);
   },
 
   getPlayerNotFound() {

@@ -85,9 +85,14 @@ module.exports = {
       throw exceptionFactory.getSizeNotSpecified();
     }
 
-    if (!size.x || !size.y) {
+    if (isNaN(size.x) || isNaN(size.y)) {
       throw exceptionFactory.getSizeParametersNotSpecified();
     }
+
+    if (size.x <= 0 || size.y <= 0) {
+      throw exceptionFactory.getSizeParametersMustBeBiggerThanZero();
+    }
+
 
     return create({ 
       id, 

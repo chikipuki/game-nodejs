@@ -13,38 +13,45 @@ var DeletePlayerUseCase = require('../use-cases/delete-player');
 var GetRoutesUseCase = require('../use-cases/get-routes');
 var MoveUseCase = require('../use-cases/MoveUseCase');
 
+async function execute (fn, res) {
+  try {
+    const result = await fn();
+    res.json(result);
+  } catch (e) {
+    console.log({e})
+    res.status(e.status || 500);
+    res.json(e);
+  }
+}
+
 router.get('/', async function(req, res, next) {
-  res.send('Welcome');
+  res.json('Welcome');
 });
 
 router.post('/player', async function(req, res, next) {
-  const result = await AddPlayerUseCase({ repository, exceptionFactory }).addPlayer({ id: req.body.id, size: req.body.size });
-  res.json(result);
+  execute(() => AddPlayerUseCase({ repository, exceptionFactory }).addPlayer({ id: req.body.id, size: req.body.size }), res);
 })
 
 router.get('/:id/position', async function(req, res, next) {
-  const result = await GetCurrentPositionUseCase({ repository, exceptionFactory }).getPosition({ id: req.params.id });
-  res.json(result);
+  execute(() => GetCurrentPositionUseCase({ repository, exceptionFactory }).getPosition({ id: req.params.id }), res);
 })
 
 router.patch('/:id/move', async function(req, res, next) {
-  const result = await MoveUseCase({ repository, exceptionFactory }).move({ id: req.params.id, direction: req.query.direction });
-  res.json(result);
+  execute(() => MoveUseCase({ repository, exceptionFactory }).move({ id: req.params.id, direction: req.query.direction }), res);
 })
 
 router.get('/players', async function(req, res, next) {
-  const result = await ListPlayersUseCase({ repository }).getAll();
-  res.json(result);
+  execute(() => ListPlayersUseCase({ repository }).getAll(), res);
 })
 
 router.delete('/:id', async function(req, res, next) {
-  const result = await DeletePlayerUseCase({ repository, exceptionFactory }).delete({ id: req.params.id });
-  res.json(result);
+  execute(() => DeletePlayerUseCase({ repository, exceptionFactory }).delete({ id: req.params.id }), res);
 });
 
 router.get('/:id/route', async function(req, res, next) {
-  const result = await GetRoutesUseCase({ repository, exceptionFactory }).getRoutes({ id: req.body.id });
-  res.json(result);
+  execute(() => GetRoutesUseCase({ repository, exceptionFactory }).getRoutes({ id: req.body.id }), res);
 });
 
 module.exports = router;
+
+

@@ -1,3 +1,5 @@
+const getCurrentPosition = require("../use-cases/get-current-position");
+
 function create({ id, width, height, routes }) {
   return {
     id: id.toString(),
@@ -20,6 +22,14 @@ function create({ id, width, height, routes }) {
       const finished = position.x === width - 1 && position.y === height - 1;
 
       return { finished, ...position }
+    },
+
+    getCurrentState: () => {
+
+      const position = routes[routes.length - 1];
+      const finished = position.x === width - 1 && position.y === height - 1;
+
+      return { id, finished, position }
     }
   }
 }

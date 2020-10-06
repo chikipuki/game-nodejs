@@ -6,12 +6,12 @@ var AddPlayerUseCase = require('../use-cases/add-player');
 var GetCurrentPositionUseCase = require('../use-cases/get-current-position');
 
 router.get('/', async function(req, res, next) {
-  const result = await GetCurrentPositionUseCase({ repository, exceptionFactory }).getPosition({ id: 1 });
+  const result = await GetCurrentPositionUseCase({ repository, exceptionFactory }).getPosition({ id: 2 });
   res.json(result);
 });
 
 router.post('/player', async function(req, res, next) {
-  const result = await AddPlayerUseCase({ repository, exceptionFactory }).addPlayer({ id: 112, size: { x: 4, y: 5 } });
+  const result = await AddPlayerUseCase({ repository, exceptionFactory }).addPlayer({ id: req.body.id, size: req.body.size });
   res.json(result);
 })
 

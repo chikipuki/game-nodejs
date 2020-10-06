@@ -19,12 +19,16 @@ module.exports = {
     return createError('player already exists', CONFLICT);
   },
 
+  getSizeNotSpecified() {
+    return createError('size not specified', BAD_REQUEST);
+  },
+
   getSizeParametersNotSpecified() {
     return createError('size parameters not specified', BAD_REQUEST);
   },
 
   getPlayerNotFound() {
     return createError('player not found', BAD_REQUEST);
-  }
+  },
 
 }

@@ -1,3 +1,5 @@
+const PlayerModel = require('../models/player');
+
 module.exports = function ({ repository, exceptionFactory }) {
   return {
     getPosition: async function({ id }) {
@@ -13,13 +15,11 @@ module.exports = function ({ repository, exceptionFactory }) {
         throw exceptionFactory.getPlayerNotFound();
       }
 
-      const player = exists[0];
-      const routes = player.routes;
+      console.log(exists[0])
 
-      const position = routes[routes.length - 1];
-      const finished = position.x === player.width - 1 && position.y === player.height - 1;
+      const player = PlayerModel.createPlayerFromSchema(exists[0]);
 
-      return { finished, ...position };
+      return player.getCurrentPosition();
 
     }
   }

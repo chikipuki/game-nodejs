@@ -3,22 +3,20 @@ const Player = require('../schema/player');
 module.exports = {
 
   findById: (id) => {
+    console.log('findById ', id);
     return new Promise(function(resolve, reject) {
-      Player.findById(id, (err, player) => {
+      console.log('promise callback')
+      Player.find({ playerId: id }, (err, player) => {
+        console.log('inside player callback')
         let data = {};
 
         if (err) {
-            data = {
-                error: true,
-                error_message: err
-            };
-            reject(data);
+            console.log({ err , reject: true })
+            reject(err);
             return;
         }
-        data = {
-            'data': { player }
-        };
-        resolve(data);
+        console.log({ data, resolve: true })
+        resolve(player);
       });
     });
   },
@@ -29,99 +27,48 @@ module.exports = {
 
         console.log({ players })
 
-        let data = {};
-
         if (err) {
-            data = {
-                error: true,
-                error_message: err
-            };
-            reject(data);
-            return;
-        }
-        data = {
-            'data': { players }
-        };
-        resolve(data);
-      });
-    });
-  },
-
-  create: (player) => {
-    return new Promise(function (resolve, reject) {
-      Player.create(player, (err, newPlayer) => {
-
-        let data = {};
-
-        if (err) {
-            data = {
-                error: true,
-                error_message: err
-            };
             reject(err);
             return;
         }
-        
-        data = {
-            'data': { player: newPlayer }
-        };
-        resolve(data);
+        resolve(players);
       });
     });
   },
 
-  update: (id, data, cb) => {
+  create: (playerData) => {
+    return new Promise(function (resolve, reject) {
+      Player.create(playerData, (err, player) => {
+        if (err) {
+            reject(err);
+            return;
+        }
+        resolve(player);
+      });
+    });
+  },
+
+  update: (id, data) => {
 
     return new Promise(function (resolve, reject) {
       Player.update({'_id': id}, {$set: data}, (err) => {
-
-        let data = {};
-
         if (err) {
-            data = {
-                error: true,
-                error_message: err
-            };
-            reject(data);
+            reject(err);
             return;
-    }
-
-        Player.findById(id, (err, player) => {
-            if (err) {
-                data = {
-                    error: true,
-                    error_message: err
-                };
-                reject(data);
-                return;
-            }
-
-            data = {
-                'data': {player}
-            };
-
-            resolve(data);
-        });
+        }
+        resolve(true);
     });
   });
   },
 
-  remove: (id, cb) => {
+  remove: (id) => {
     return new Promise(function(resolve, reject) {
       Player.findByIdAndRemove(id, (err) => {
         if (err) {
-            data = {
-                error: true,
-                error_message: err
-            };
-            reject(data);
+            reject(err);
             return;
         }
-
-        data = {
-            status: true
-        };
-        resolve(data);
+        resolve(true);
     });
   });
   }

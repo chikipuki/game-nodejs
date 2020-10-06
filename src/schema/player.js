@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
 
-    id: {
+    playerId: {
       required: true,
       unique: true,
       type: String

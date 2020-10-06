@@ -1,19 +1,42 @@
-import ExceptionFactory from '../exceptions/factory'
+const ExceptionFactory = require('../exceptions/factory')
 
-export default function addPlayerFactory({ repository }) {
+module.exports = function ({ repository }) {
+  return {
+    addPlayer: async function({ id, size }) {
+      
+      console.log({ id, size })
+    
+      if (!id) {
+        throw ExceptionFactory.getPlayerIdNotSpecified();
+      }
 
-  return async function addPlayer(addPlayerRequest) {
+      const playerId = id.toString();
+      const exists = await repository.findById(playerId)
+    
+      console.log({ exists })
+    
+      if (exists && exists.length > 0) {
+        throw ExceptionFactory.getPlayerAlreadyExists();
+      }
 
-    const id = addPlayerRequest.id;
+      if (!size || !size.x || !size.y) {
+        throw ExceptionFactory.getSizeParametersNotSpecified();
+      }
 
-    if (!id) {
-      throw ExceptionFactory.getPlayerIdNotSpecified();
-    }
+      const playerData = {
+        playerId: id.toString(),
+        width: size.x,
+        height: size.y,
+        routes: [ { x: 0, y: 0 }]
+      }
 
-    const exists = await repository.findById(id)
+      console.log({ playerData })
 
-    if (exists) {
-      throw ExceptionFactory.getPlayerAlreadyExistsException();
+      const createdPlayer = await repository.create(playerData);
+
+      console.log({ createdPlayer })
+
+      return createdPlayer;
     }
   }
 }

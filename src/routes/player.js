@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var Repository = require('../repositories/player');
-
-router.get('/', function(req, res, next) {
-  Repository.all((data) => res.json(data))
+var AddPlayerUseCase = require('../use-cases/add-player');
+router.get('/', async function(req, res, next) {
+  const result = AddPlayerUseCase({ repository: Repository }).addPlayer({ id: 112, size: { x: 4, y: 5 } });
+  console.log({result})
 });
 
 router.post('/player', function(req, res, next) {
